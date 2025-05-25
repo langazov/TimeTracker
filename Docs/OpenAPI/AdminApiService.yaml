@@ -1,0 +1,121 @@
+openapi: '3.0.3'
+info:
+  title: IMSC Time Tracking
+  version: '1.0'
+servers:
+  - url: https://time.imsc.eu/api
+
+paths:
+  '/api/admin/company':
+    post:
+      operationId: saveCompnany
+      summary: "Edit company"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Company"        
+      responses:
+        "201":
+          description: Created        
+
+  
+  '/api/admin/company/{id}':
+    get:
+      operationId: getCompanyById
+      parameters:
+        - in:  path
+          name: id
+          schema: 
+            type: string
+            format: uuid
+          required: true
+          description: "Company Id"
+      responses: 
+        '200': 
+          description: "Get Company by Id"
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+    put:
+      summary: "Edit company"
+      parameters:
+        - in:  path
+          name: id
+          schema: 
+            type: string
+            format: uuid
+          required: true
+          description: "Company Id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Company"        
+      responses:
+        "200":
+          description: User updated        
+    delete: 
+      summary: "Delete the company"
+      parameters:
+        - in:  path
+          name: id
+          schema: 
+            type: string
+            format: uuid
+          required: true
+          description: "Company Id"
+      responses: 
+        "204":
+          description: Deleted
+  '/api/admin/user/{id}':
+    get:
+      parameters:
+        - in:  path
+          name: id
+          schema: 
+            type: integer
+          required: true
+          description: "User Id"
+      responses: 
+        '200': 
+          description: "Get User by Id"
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+components:
+  schemas:
+    Company: 
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        Name: 
+          type: string
+        vat_id:
+          type: string
+    User: 
+      type: object
+      properties:
+        id: 
+          type: string
+          format: uuid
+        first_name: 
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        country: 
+          type: string
+        city: 
+          type: string
+        post_code:
+          type: string
+          
+        
+        
+
